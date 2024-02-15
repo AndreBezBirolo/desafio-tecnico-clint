@@ -1,9 +1,10 @@
-import { IColumn } from "../../interfaces/interfaces";
+import { IColumn, IDraggable } from "../../interfaces/interfaces";
 import React from "react";
 import { Column } from "../Column/Column";
 import './Board.css'
 import { Form } from "react-bootstrap";
 import { debounce } from "lodash";
+import { DragDropContext, Droppable } from "react-beautiful-dnd";
 
 interface BoardProps {
     columns: IColumn[];
@@ -13,7 +14,8 @@ interface BoardProps {
     search: string | null;
     setFilter: React.Dispatch<React.SetStateAction<string | null>>;
     setSort: React.Dispatch<React.SetStateAction<string | null>>;
-    setSearch: React.Dispatch<React.SetStateAction<string | null>>
+    setSearch: React.Dispatch<React.SetStateAction<string | null>>;
+    onTaskMove: (taskId: number, updatedStatus: string) => void;
 }
 
 export const Board: React.FC<BoardProps> = ({
@@ -24,7 +26,8 @@ export const Board: React.FC<BoardProps> = ({
                                                 search,
                                                 setFilter,
                                                 setSort,
-                                                setSearch
+                                                setSearch,
+                                                onTaskMove
                                             }) => {
 
     const delayedHandleSearchChange = debounce((value: string) => {
@@ -43,31 +46,48 @@ export const Board: React.FC<BoardProps> = ({
         setSort(event.target.value);
     };
 
+    const onDragEnd = (result: any) => {
+        const resultObject: IDraggable = result;
+        if (!result.destination) {
+            return;
+        }
+        const taskId = resultObject.draggableId;
+        const updatedStatus = resultObject.destination.droppableId;
+        onTaskMove(taskId, updatedStatus);
+    };
+
     return (
-        <div className="board">
-            <div className="actions-container">
-                <Form.Select onChange={handleFilterChange} defaultValue="">
-                    <option value="">Filter by...</option>
-                    <option value="Ready">Ready</option>
-                    <option value="To do">To do</option>
-                    <option value="Doing">Doing</option>
-                </Form.Select>
-                <Form.Select onChange={handleSortChange} defaultValue="">
-                    <option value="">Order by...</option>
-                    <option value="name">Name</option>
-                    <option value="due_date">Due Date</option>
-                </Form.Select>
-                <Form.Control
-                    type="text"
-                    placeholder="Search..."
-                    onChange={handleSearchChange}
-                />
+        <DragDropContext onDragEnd={onDragEnd}>
+            <div className="board">
+                <div className="actions-container">
+                    <Form.Select onChange={handleFilterChange} defaultValue="">
+                        <option value="">Filter by...</option>
+                        <option value="Ready">Ready</option>
+                        <option value="To do">To do</option>
+                        <option value="Doing">Doing</option>
+                    </Form.Select>
+                    <Form.Select onChange={handleSortChange} defaultValue="">
+                        <option value="">Order by...</option>
+                        <option value="name">Name</option>
+                        <option value="due_date">Due Date</option>
+                    </Form.Select>
+                    <Form.Control
+                        type="text"
+                        placeholder="Search..."
+                        onChange={handleSearchChange}
+                    />
+                </div>
+                <Droppable droppableId="board" direction="horizontal" type="column">
+                    {(provided) => (
+                        <div ref={provided.innerRef} {...provided.droppableProps} className="columns-container">
+                            {columns.map((column: IColumn, index: number) => (
+                                <Column index={index} key={column.key} column={column} onUpdateTasks={onUpdateTasks}/>
+                            ))}
+                            {provided.placeholder}
+                        </div>
+                    )}
+                </Droppable>
             </div>
-            <div className="columns-container">
-                {columns.map((column: IColumn) => (
-                    <Column onUpdateTasks={onUpdateTasks} key={column.key} column={column}></Column>
-                ))}
-            </div>
-        </div>
+        </DragDropContext>
     );
 };

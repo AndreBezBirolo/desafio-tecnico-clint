@@ -1,11 +1,16 @@
 .board {
     background: #8bb6b8;
-    height: 100vh;
-    max-width: 65%;
+    min-height: 100vh;
     margin: 0 auto;
+    max-width: 95%;
     border-radius: 8px;
     padding: 10px;
-    overflow-y: scroll;
+}
+
+@media (min-width: 900px) {
+    .board {
+        max-width: 65%;
+    }
 }
 
 .columns-container {
@@ -16,7 +21,8 @@
 
 .actions-container {
     display: flex;
-    max-width: 30%;
+    width: 60%;
+    min-width: 60%;
     margin: 0 auto;
     gap: 10px;
 }

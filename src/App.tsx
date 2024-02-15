@@ -77,8 +77,18 @@ function App() {
         setShowForm(false);
     };
 
+    const handleTaskMove = async (taskId: number, updatedStatus: string) => {
+        try {
+            await axios.patch(`${process.env.REACT_APP_BACKEND_URL}/tasks/${taskId}`, {
+                status: updatedStatus
+            });
+            await fetchTasks();
+        } catch (error) {
+            console.error('Erro ao mover a tarefa:', error);
+        }
+    };
+
     useEffect(() => {
-        /* TODO: Verificar porque está sendo chamado duas vezes */
         fetchTasks();
     }, [filter, sort, search]);
 
@@ -98,6 +108,7 @@ function App() {
                     <>
                         <Button className="add-task-button" onClick={handleAddTaskClick}>Add new task</Button>
                         <Board onUpdateTasks={fetchTasks} setSearch={setSearch} filter={filter} sort={sort}
+                               onTaskMove={handleTaskMove}
                                setFilter={setFilter}
                                search={search}
                                setSort={setSort} columns={columns}/>
