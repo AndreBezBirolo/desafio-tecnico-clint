@@ -46,8 +46,17 @@ function App() {
         }
     }
 
-    const handleFormSubmit = (taskData: ITaskBase) => {
-        console.log('--- Teste de form:', taskData)
+    const postTask = async (taskData: ITaskBase): Promise<void> => {
+        try {
+            await axios.post(`${process.env.REACT_APP_BACKEND_URL}/tasks`, taskData);
+        } catch (e) {
+            console.log('--- Error: ', e)
+        }
+    }
+
+    const handleFormSubmit = async (taskData: ITaskBase) => {
+        await postTask(taskData);
+        await fetchTasks();
         setShowForm(false);
     };
 
