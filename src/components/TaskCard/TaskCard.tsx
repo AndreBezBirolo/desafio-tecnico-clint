@@ -40,17 +40,17 @@ export const TaskCard: React.FC<TaskCardProps> = ({task, onDelete}) => {
 
             <Modal show={showModal} onHide={handleCloseModal}>
                 <Modal.Header closeButton>
-                    <Modal.Title>Confirmação</Modal.Title>
+                    <Modal.Title>Confirmation</Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
-                    Tem certeza que deseja excluir esta tarefa?
+                    Are you sure you want to delete this task?
                 </Modal.Body>
                 <Modal.Footer>
                     <Button variant="secondary" onClick={handleCloseModal}>
-                        Cancelar
+                        Cancel
                     </Button>
                     <Button variant="danger" onClick={handleDeleteTask}>
-                        Excluir
+                        Delete
                     </Button>
                 </Modal.Footer>
             </Modal>

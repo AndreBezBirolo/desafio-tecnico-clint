@@ -49,7 +49,7 @@ export const TaskForm: React.FC<TaskFormProps> = ({onSubmit, onBack}) => {
             <div className="task-form-container">
                 <Form onSubmit={handleSubmit}>
                     <Form.Group controlId="taskName">
-                        <Form.Label>Nome da Tarefa</Form.Label>
+                        <Form.Label>Task name</Form.Label>
                         <Form.Control
                             type="text"
                             name="name"
@@ -59,7 +59,7 @@ export const TaskForm: React.FC<TaskFormProps> = ({onSubmit, onBack}) => {
                         />
                     </Form.Group>
                     <Form.Group controlId="due_date">
-                        <Form.Label>Data de Conclusão</Form.Label>
+                        <Form.Label>Due date</Form.Label>
                         <Form.Control
                             type="date"
                             name="due_date"
@@ -76,17 +76,17 @@ export const TaskForm: React.FC<TaskFormProps> = ({onSubmit, onBack}) => {
                             onChange={handleChangeSelect}
                             required
                         >
-                            <option value="">Selecione o status</option>
+                            <option value="">Select a status</option>
                             <option value="To do">To do</option>
                             <option value="Doing">Doing</option>
                             <option value="Ready">Ready</option>
                         </Form.Select>
                     </Form.Group>
                     <Button variant="primary" type="submit">
-                        Enviar
+                        Send
                     </Button>
                     <Button variant="secondary" onClick={handleBack}>
-                        Voltar
+                        Back
                     </Button>
                 </Form>
             </div>

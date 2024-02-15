@@ -26,7 +26,10 @@ function App() {
         },
     ])
     const [tasks, setTasks] = useState<ITask[]>([]);
-    const [showForm, setShowForm] = useState(false);
+    const [showForm, setShowForm] = useState
+    (false);
+    const [filter, setFilter] = useState<string | null>(null);
+    const [sort, setSort] = useState<string | null>(null);
     const handleAddTaskClick = () => {
         setShowForm(true);
     };
@@ -39,7 +42,12 @@ function App() {
     };
     const fetchTasks = async (): Promise<void> => {
         try {
-            const response = await axios.get<ITask[]>(`${process.env.REACT_APP_BACKEND_URL}/tasks`);
+            const response = await axios.get<ITask[]>(`${process.env.REACT_APP_BACKEND_URL}/tasks`, {
+                params: {
+                    filter,
+                    sort,
+                },
+            });
             setTasks(response.data);
         } catch (e) {
             console.log('--- Error: ', e)
@@ -67,7 +75,7 @@ function App() {
     useEffect(() => {
         /* TODO: Verificar porque está sendo chamado duas vezes */
         fetchTasks();
-    }, []);
+    }, [filter, sort]);
 
     useEffect(() => {
         organizeTasksInColumns();
@@ -83,8 +91,9 @@ function App() {
                     <TaskForm onBack={handleFormCancel} onSubmit={handleFormSubmit}/>
                 ) : (
                     <>
-                        <Button className="add-task-button" onClick={handleAddTaskClick}>Adicionar nova tarefa</Button>
-                        <Board onUpdateTasks={fetchTasks} columns={columns}/>
+                        <Button className="add-task-button" onClick={handleAddTaskClick}>Add new task</Button>
+                        <Board onUpdateTasks={fetchTasks} filter={filter} sort={sort} setFilter={setFilter}
+                               setSort={setSort} columns={columns}/>
                     </>
                 )}
             </main>

@@ -53,3 +53,5 @@ T
 $src/components/TaskForm/TaskForm.css,8\0\80ca3e9ac0e8a9eb53545096f22b19b5c5ce617f
 T
 $src/components/TaskCard/TaskCard.css,d\b\dbbf24b7a5c3fde577b49fa71d464ed4ed656de0
+N
+src/components/Board/Board.css,3\d\3d964b2819ff87b5720352fa87ed9e77488b41af
