@@ -77,9 +77,9 @@ export const TaskForm: React.FC<TaskFormProps> = ({onSubmit, onBack}) => {
                             required
                         >
                             <option value="">Select a status</option>
-                            <option value="To do">To do</option>
-                            <option value="Doing">Doing</option>
-                            <option value="Ready">Ready</option>
+                            <option value="todo">To do</option>
+                            <option value="doing">Doing</option>
+                            <option value="ready">Ready</option>
                         </Form.Select>
                     </Form.Group>
                     <Button variant="primary" type="submit">

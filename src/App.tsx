@@ -103,6 +103,11 @@ function App() {
         setIsLoggedIn(true);
     };
 
+    const handleLogout = () => {
+        setIsLoggedIn(false);
+        UserService.logout();
+    };
+
     useEffect(() => {
         setupJWT();
     }, []);
@@ -132,7 +137,10 @@ function App() {
     return (
         <div className="App">
             <header>
-                <h1>Online Kanban Board</h1>
+                <div className="header-content">
+                    <h1>Online Kanban Board</h1>
+                    {isLoggedIn ? <a onClick={handleLogout} className="link">Logout</a> : ''}
+                </div>
                 <ErrorToast show={showError} onClose={handleCloseError} message={errorMessage}/>
             </header>
             <main>

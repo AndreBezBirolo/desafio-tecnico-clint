@@ -15,7 +15,7 @@ const UserService = {
             throw error;
         }
     },
-    /* TODO: Atualizar o register */
+
     register: async (username: string, password: string) => {
         try {
             const response = await axios.post(`${process.env.REACT_APP_BACKEND_URL}/user/register`, {

@@ -75,3 +75,5 @@ O
 src/services/AuthMiddleware.tsx,6\2\620926b4202e4bfaf315dbf9f178fd68d4192cfd
 Q
 !src/Middleware/AuthMiddleware.tsx,3\f\3fc915cb357489f33bf67164aba95b57f3acef82
+V
+&src/components/LoginForm/LoginForm.css,0\4\044a5fbb0b3111cb2937517eb38ac40facd30832

@@ -1,6 +1,9 @@
 import React, { useState } from 'react';
 import { Button, Form } from "react-bootstrap";
 import UserService from "../../services/UserService";
+import './LoginForm.css'
+import ErrorToast from "../Toasts/ErrorToast";
+
 
 interface LoginFormProps {
     onLogin: () => void;
@@ -33,11 +36,10 @@ const LoginForm: React.FC<LoginFormProps> = ({onLogin}) => {
     }
 
     const registerUser = async (): Promise<void> => {
-        /* TODO: Fazer com que no registro ele se logue após registrar */
         try {
             await UserService.register(username, password)
                 .then(async () => {
-                    console.log('oi')
+                    onLogin();
                 })
         } catch (error) {
             handleShowError('An error occurred while sending data to the server.');
@@ -49,21 +51,30 @@ const LoginForm: React.FC<LoginFormProps> = ({onLogin}) => {
     };
 
     return (
-        <Form onSubmit={handleSubmit}>
-            <Form.Group controlId="formBasicUsername">
-                <Form.Control type="text" placeholder="Username" value={username}
-                              onChange={(e) => setUsername(e.target.value)}/>
-            </Form.Group>
+        <div className="center">
+            <div className="form-container">
+                <ErrorToast show={showError} onClose={handleCloseError} message={errorMessage}/>
+                <Form onSubmit={handleSubmit}>
+                    <Form.Group controlId="formBasicUsername">
+                        <Form.Control type="text" placeholder="Username" value={username}
+                                      onChange={(e) => setUsername(e.target.value)}/>
+                    </Form.Group>
 
-            <Form.Group controlId="formBasicPassword">
-                <Form.Control type="password" placeholder="Password" value={password}
-                              onChange={(e) => setPassword(e.target.value)}/>
-            </Form.Group>
+                    <Form.Group controlId="formBasicPassword">
+                        <Form.Control type="password" placeholder="Password" value={password}
+                                      onChange={(e) => setPassword(e.target.value)}/>
+                    </Form.Group>
 
-            <Button variant="primary" type="submit">
-                Login
-            </Button>
-        </Form>
+                    <Button variant="primary" type="submit">
+                        Login
+                    </Button>
+
+                    <Button variant="link" onClick={registerUser}>
+                        Register
+                    </Button>
+                </Form>
+            </div>
+        </div>
     );
 };
 
