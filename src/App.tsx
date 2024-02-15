@@ -7,8 +7,12 @@ import { Button } from "react-bootstrap";
 import { TaskForm } from "./components/TaskForm/TaskForm";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import ErrorToast from "./components/Toasts/ErrorToast";
+import LoginForm from "./components/LoginForm/LoginForm";
+import { setupJWT } from './Middleware/AuthMiddleware';
+import UserService from "./services/UserService";
 
 function App() {
+    const [isLoggedIn, setIsLoggedIn] = useState(false);
     const [columns, setColumns] = useState<IColumn[]>([
         {
             key: 'todo',
@@ -95,17 +99,35 @@ function App() {
         setShowForm(true);
     };
 
-    useEffect(() => {
-        fetchTasks();
-    }, [filter, sort, search]);
+    const handleLogin = () => {
+        setIsLoggedIn(true);
+    };
 
     useEffect(() => {
-        const newColumns = columns.map((column) => ({
-            ...column,
-            tasks: tasks.filter((task) => task.status.replace(/\s/g, '').toLowerCase() === column.key),
-        }));
-        setColumns(newColumns);
-    }, [tasks]);
+        setupJWT();
+    }, []);
+
+    useEffect(() => {
+        const token = UserService.getToken();
+        setIsLoggedIn(!!token);
+    }, []);
+
+    useEffect(() => {
+        if (isLoggedIn) {
+            fetchTasks();
+        }
+    }, [filter, sort, search, isLoggedIn]);
+
+    useEffect(() => {
+        if (isLoggedIn) {
+            const newColumns = columns.map((column) => ({
+                ...column,
+                tasks: tasks.filter((task) => task.status.replace(/\s/g, '').toLowerCase() === column.key),
+            }));
+            setColumns(newColumns);
+        }
+
+    }, [tasks, isLoggedIn]);
 
     return (
         <div className="App">
@@ -114,17 +136,23 @@ function App() {
                 <ErrorToast show={showError} onClose={handleCloseError} message={errorMessage}/>
             </header>
             <main>
-                {showForm ? (
-                    <TaskForm onBack={() => setShowForm(false)} onSubmit={handleFormSubmit}/>
-                ) : (
+                {isLoggedIn ? (
                     <>
-                        <Button className="add-task-button" onClick={handleAddTaskClick}>Add new task</Button>
-                        <Board onUpdateTasks={fetchTasks} setSearch={setSearch} filter={filter} sort={sort}
-                               onTaskMove={handleTaskMove}
-                               setFilter={setFilter}
-                               search={search}
-                               setSort={setSort} columns={columns}/>
+                        {showForm ? (
+                            <TaskForm onBack={() => setShowForm(false)} onSubmit={handleFormSubmit}/>
+                        ) : (
+                            <>
+                                <Button className="add-task-button" onClick={handleAddTaskClick}>Add new task</Button>
+                                <Board onUpdateTasks={fetchTasks} setSearch={setSearch} filter={filter} sort={sort}
+                                       onTaskMove={handleTaskMove}
+                                       setFilter={setFilter}
+                                       search={search}
+                                       setSort={setSort} columns={columns}/>
+                            </>
+                        )}
                     </>
+                ) : (
+                    <LoginForm onLogin={handleLogin}/>
                 )}
             </main>
         </div>

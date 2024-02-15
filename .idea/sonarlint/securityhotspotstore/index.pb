@@ -61,3 +61,17 @@ J
 src/pages/TaskFormPage.tsx,e\e\eed982da6a636b72807b21194383a329af50b790
 T
 $src/components/Toasts/ErrorToast.tsx,c\9\c9b3327f7005956076d2272c84eef51831b8dbf7
+V
+&src/components/LoginForm/LoginForm.tsx,5\4\54190ecb54f591fe4253b5298bfd2cf2dd9508d8
+D
+src/services/Auth.js,1\4\14a4e79df3b596e93c7c3cc592052f9e1bd2db70
+K
+src/services/UserService.js,8\1\81bf9747002caed17c5bd93a784f21495ac072ec
+N
+src/services/AuthMiddleware.js,7\d\7d606f40bf9c1092afb713ffb4c21d4c62137391
+L
+src/services/UserService.tsx,3\2\3213827e1e05a6b5308f6e2d9f5e3de35b7fbc0d
+O
+src/services/AuthMiddleware.tsx,6\2\620926b4202e4bfaf315dbf9f178fd68d4192cfd
+Q
+!src/Middleware/AuthMiddleware.tsx,3\f\3fc915cb357489f33bf67164aba95b57f3acef82
