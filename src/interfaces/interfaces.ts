@@ -1,12 +1,12 @@
-export interface Task {
+export interface ITask {
     id: number;
     name: string;
     status: string;
-    due_date: string;
+    due_date: Date;
 }
 
-export interface Column {
+export interface IColumn {
     key: string,
     title: string,
-    tasks: Task[]
+    tasks: ITask[]
 }

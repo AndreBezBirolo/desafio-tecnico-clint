@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import './App.css';
 import axios from "axios";
-import { Column, Task } from "./interfaces/interfaces";
+import { IColumn, ITask } from "./interfaces/interfaces";
 import { Board } from './components/Board';
 
 function App() {
-    const [columns, setColumns] = useState<Column[]>([
+    const [columns, setColumns] = useState<IColumn[]>([
         {
             key: 'todo',
             title: 'To do',
@@ -22,7 +22,7 @@ function App() {
             tasks: [],
         },
     ])
-    const [tasks, setTasks] = useState<Task[]>([]);
+    const [tasks, setTasks] = useState<ITask[]>([]);
 
     useEffect(() => {
         /* TODO: Verificar porque está sendo chamado duas vezes */
@@ -43,7 +43,7 @@ function App() {
     };
     const fetchTasks = async (): Promise<void> => {
         try {
-            const response = await axios.get<Task[]>(`${process.env.REACT_APP_BACKEND_URL}/tasks`);
+            const response = await axios.get<ITask[]>(`${process.env.REACT_APP_BACKEND_URL}/tasks`);
             setTasks(response.data);
         } catch (e) {
             console.log('--- Error: ', e)
@@ -54,18 +54,7 @@ function App() {
         <div className="App">
             <header>Online Kanban Board</header>
             <main>
-                {/*    Criar o board e o formulário para cadastrar task */}
                 <Board columns={columns}></Board>
-                {/*{columns.map((column) => (*/}
-                {/*    <div key={column.key}>*/}
-                {/*        <h2>{column.title}</h2>*/}
-                {/*        <ul>*/}
-                {/*            {column.tasks.map((task) => (*/}
-                {/*                <li key={task.id}>{task.name}</li>*/}
-                {/*            ))}*/}
-                {/*        </ul>*/}
-                {/*    </div>*/}
-                {/*))}*/}
             </main>
         </div>
     );

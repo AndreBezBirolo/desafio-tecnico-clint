@@ -1,18 +1,18 @@
-import { Column } from "../interfaces/interfaces";
+import { IColumn } from "../interfaces/interfaces";
 import React from "react";
+import { Column } from "./Column";
 
 interface BoardProps {
-    columns: Column[];
+    columns: IColumn[];
 }
 
 export const Board: React.FC<BoardProps> = ({columns}) => {
     return (
         <div className="board">
-            {columns.map((column: Column) => (
+            {columns.map((column: IColumn) => (
                 <div key={column.key}>
-                    <h2>{column.title}</h2>
                     <div>
-                        Lista de tarefas
+                        <Column key={column.key} column={column}></Column>
                     </div>
                 </div>
             ))}

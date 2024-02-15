@@ -31,3 +31,7 @@ H
 src/components/Board.tsx,9\0\90e3b7bdc4294588a97e9bb127d6761d1cfe82e9
 L
 src/interfaces/interfaces.ts,a\6\a6a573ec85c3f2bf06757b861ec63b204b2fbc1f
+I
+src/components/Column.tsx,e\d\ed484f2cdf1a708653cc108fd8e00f38201ccc0a
+K
+src/components/TaskCard.tsx,b\b\bb68dc227f5078b9fd4d6cbef0339b2013de7e6f
