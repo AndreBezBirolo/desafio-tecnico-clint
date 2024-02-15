@@ -30,6 +30,7 @@ export const Board: React.FC<BoardProps> = ({
                                                 onTaskMove
                                             }) => {
     const [updatedColumns, setUpdatedColumns] = useState<IColumn[]>(columns);
+    const [isFirstChange, setIsFirstChange] = useState<boolean>(true);
 
     useEffect(() => {
         setUpdatedColumns(columns);
@@ -51,8 +52,14 @@ export const Board: React.FC<BoardProps> = ({
         setSort(event.target.value);
     };
 
-    const onDragEnd = (result: DropResult) => {
-        console.log('-- on drag end')
+    const onDragEnd = async (result: DropResult) => {
+        let actualColumns = [];
+        if (isFirstChange) {
+            actualColumns = columns;
+        } else {
+            actualColumns = updatedColumns;
+        }
+
         const {destination, draggableId, source} = result;
         if (!destination) {
             return;
@@ -61,19 +68,18 @@ export const Board: React.FC<BoardProps> = ({
         const sourceColumnKey = source.droppableId;
         const destinationColumnKey = destination.droppableId;
 
-        const sourceColumnIndex = columns.findIndex(column => column.key === sourceColumnKey);
+        const sourceColumnIndex = actualColumns.findIndex(column => column.key === sourceColumnKey);
         if (sourceColumnIndex === -1) {
             console.error('Coluna de origem não encontrada');
             return;
         }
-        const sourceColumn = columns[sourceColumnIndex];
+        const sourceColumn = actualColumns[sourceColumnIndex];
 
-        const destinationColumnIndex = columns.findIndex(column => column.key === destinationColumnKey);
+        const destinationColumnIndex = actualColumns.findIndex(column => column.key === destinationColumnKey);
         if (destinationColumnIndex === -1) {
             console.error('Coluna de destino não encontrada');
             return;
         }
-        const destinationColumn = columns[destinationColumnIndex];
 
         const taskIndex = sourceColumn.tasks.findIndex(task => task.id === taskId);
         if (taskIndex === -1) {
@@ -82,18 +88,22 @@ export const Board: React.FC<BoardProps> = ({
         }
         const task = sourceColumn.tasks[taskIndex];
 
-        const updatedSourceTasks = [...sourceColumn.tasks];
-        updatedSourceTasks.splice(taskIndex, 1);
-
-        const updatedDestinationTasks = [...destinationColumn.tasks];
-        updatedDestinationTasks.splice(destination.index, 0, task);
-
-        const updatedColumns = [...columns];
-        updatedColumns[sourceColumnIndex] = {...sourceColumn, tasks: updatedSourceTasks};
-        updatedColumns[destinationColumnIndex] = {...destinationColumn, tasks: updatedDestinationTasks};
-
-        setUpdatedColumns(updatedColumns);
         onTaskMove(taskId, destinationColumnKey);
+
+        const updatedColumnsCopy = [...actualColumns];
+        const updatedSourceTasks = [...updatedColumnsCopy[sourceColumnIndex].tasks];
+        updatedSourceTasks.splice(taskIndex, 1);
+        updatedColumnsCopy[sourceColumnIndex] = {...updatedColumnsCopy[sourceColumnIndex], tasks: updatedSourceTasks};
+
+        const updatedDestinationTasks = [...updatedColumnsCopy[destinationColumnIndex].tasks];
+        updatedDestinationTasks.splice(destination.index, 0, task);
+        updatedColumnsCopy[destinationColumnIndex] = {
+            ...updatedColumnsCopy[destinationColumnIndex],
+            tasks: updatedDestinationTasks
+        };
+
+        setUpdatedColumns(updatedColumnsCopy);
+        setIsFirstChange(false);
     };
 
     return (
