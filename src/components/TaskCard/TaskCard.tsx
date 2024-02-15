@@ -49,7 +49,7 @@ export const TaskCard: React.FC<TaskCardProps> = ({task, index, onDelete}) => {
                 <div ref={provided.innerRef}
                      {...provided.draggableProps}
                      {...provided.dragHandleProps} className="task-card">
-                    <h3>{task.name}</h3>
+                    <h4>{task.name}</h4>
                     <ErrorToast show={showError} onClose={handleCloseError} message={errorMessage}/>
                     <p>Due date: {formattedDate.toLocaleDateString()}</p>
                     <CloseButton onClick={handleShowModal} className="close-button"></CloseButton>
