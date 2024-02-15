@@ -5,13 +5,14 @@ import './Board.css'
 
 interface BoardProps {
     columns: IColumn[];
+    onUpdateTasks: () => void;
 }
 
-export const Board: React.FC<BoardProps> = ({columns}) => {
+export const Board: React.FC<BoardProps> = ({columns, onUpdateTasks}) => {
     return (
         <div className="board">
             {columns.map((column: IColumn) => (
-                <Column key={column.key} column={column}></Column>
+                <Column onUpdateTasks={onUpdateTasks} key={column.key} column={column}></Column>
             ))}
         </div>
     );

@@ -84,7 +84,7 @@ function App() {
                 ) : (
                     <>
                         <Button className="add-task-button" onClick={handleAddTaskClick}>Adicionar nova tarefa</Button>
-                        <Board columns={columns}/>
+                        <Board onUpdateTasks={fetchTasks} columns={columns}/>
                     </>
                 )}
             </main>
