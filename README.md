@@ -1,46 +1,72 @@
-# Getting Started with Create React App
+# Kanban - Crud Front End
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+Este é o frontend do projeto de um Kanban Board, uma aplicação web para gerenciar tarefas em colunas organizadas. Este
+documento contém informações sobre como baixar, configurar e executar o projeto, além de detalhes sobre as tecnologias
+utilizadas.
 
-## Available Scripts
+## Pré-requisitos
 
-In the project directory, you can run:
+- Node.js instalado na sua máquina
+- Um navegador web moderno (como Chrome, Firefox, Safari, etc.)
 
-### `npm start`
+## Instalação
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+1. Clone este repositório para o seu computador:
+   ```bash
+   git clone https://github.com/AndreBezBirolo/desafio-tecnico-clint-front.git
+   ```
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+2. Navegue até o diretório do projeto:
+   ```bash
+   cd desafio-tecnico-clint-front
+   ```
 
-### `npm test`
+3. Instale as dependências do projeto utilizando npm ou yarn:
+   ```bash
+   npm install
+   # ou
+   yarn install
+   ```
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+## Configuração
 
-### `npm run build`
+Antes de executar o projeto, você precisa configurar o arquivo `.env` na raiz do projeto. Copie o conteúdo do
+arquivo `.env.example` e configure as variáveis de ambiente conforme o seu ambiente de desenvolvimento.
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+```bash
+REACT_APP_BACKEND_URL=http://localhost:3000
+```
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+Certifique-se de substituir `http://localhost:3000` pela URL do backend do seu projeto, se for diferente.
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+## Execução
 
-### `npm run eject`
+Após a instalação e configuração, você pode iniciar o servidor de desenvolvimento executando o seguinte comando:
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+```bash
+npm start
+# ou
+yarn start
+```
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+Isso iniciará o servidor de desenvolvimento e abrirá a aplicação no seu navegador padrão. Se isso não acontecer, você
+pode acessar a aplicação em [http://localhost:3001](http://localhost:3001).
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+## Detalhes e Tecnologias Utilizadas
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+Este projeto frontend foi desenvolvido utilizando as seguintes tecnologias:
 
-## Learn More
+- React.js: uma biblioteca JavaScript para criar interfaces de usuário
+- TypeScript: uma linguagem de programação que adiciona tipos à JavaScript
+- Axios: um cliente HTTP baseado em Promises para fazer requisições ao backend
+- React Bootstrap: uma biblioteca de componentes React baseada no Bootstrap
+- react-beautiful-dnd: uma biblioteca para arrastar e soltar elementos em React
+- Lodash: uma biblioteca utilitária JavaScript
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+## Contribuição
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+As contribuições são bem-vindas! Para sugestões, abra um problema. Para alterações importantes, envie um pull request.
+
+## Licença
+
+Este projeto está licenciado sob a [MIT License](LICENSE).
