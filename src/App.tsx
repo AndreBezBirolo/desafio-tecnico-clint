@@ -1,19 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import './App.css';
 import axios from "axios";
-
-interface Task {
-    id: number;
-    name: string;
-    status: string;
-    due_date: string;
-}
-
-interface Column {
-    key: string,
-    title: string,
-    tasks: Task[]
-}
+import { Column, Task } from "./interfaces/interfaces";
+import { Board } from './components/Board';
 
 function App() {
     const [columns, setColumns] = useState<Column[]>([
@@ -66,16 +55,17 @@ function App() {
             <header>Online Kanban Board</header>
             <main>
                 {/*    Criar o board e o formulário para cadastrar task */}
-                {columns.map((column) => (
-                    <div key={column.key}>
-                        <h2>{column.title}</h2>
-                        <ul>
-                            {column.tasks.map((task) => (
-                                <li key={task.id}>{task.name}</li>
-                            ))}
-                        </ul>
-                    </div>
-                ))}
+                <Board columns={columns}></Board>
+                {/*{columns.map((column) => (*/}
+                {/*    <div key={column.key}>*/}
+                {/*        <h2>{column.title}</h2>*/}
+                {/*        <ul>*/}
+                {/*            {column.tasks.map((task) => (*/}
+                {/*                <li key={task.id}>{task.name}</li>*/}
+                {/*            ))}*/}
+                {/*        </ul>*/}
+                {/*    </div>*/}
+                {/*))}*/}
             </main>
         </div>
     );

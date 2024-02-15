@@ -27,3 +27,7 @@ F
 src/react-app-env.d.ts,4\a\4a7b99bdbee5792679d347b6474463bf5e14b66d
 4
 .env,3\c\3c84dcdc6bbe3d7817c49dcdc327b926fea1808a
+H
+src/components/Board.tsx,9\0\90e3b7bdc4294588a97e9bb127d6761d1cfe82e9
+L
+src/interfaces/interfaces.ts,a\6\a6a573ec85c3f2bf06757b861ec63b204b2fbc1f
