@@ -3,17 +3,38 @@ import React from "react";
 import { Column } from "../Column/Column";
 import './Board.css'
 import { Form } from "react-bootstrap";
+import { debounce } from "lodash";
 
 interface BoardProps {
     columns: IColumn[];
     onUpdateTasks: () => void;
     filter: string | null;
     sort: string | null;
+    search: string | null;
     setFilter: React.Dispatch<React.SetStateAction<string | null>>;
     setSort: React.Dispatch<React.SetStateAction<string | null>>;
+    setSearch: React.Dispatch<React.SetStateAction<string | null>>
 }
 
-export const Board: React.FC<BoardProps> = ({columns, onUpdateTasks, filter, sort, setFilter, setSort}) => {
+export const Board: React.FC<BoardProps> = ({
+                                                columns,
+                                                onUpdateTasks,
+                                                filter,
+                                                sort,
+                                                search,
+                                                setFilter,
+                                                setSort,
+                                                setSearch
+                                            }) => {
+
+    const delayedHandleSearchChange = debounce((value: string) => {
+        setSearch(value);
+    }, 300);
+
+    const handleSearchChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+        delayedHandleSearchChange(event.target.value);
+    };
+
     const handleFilterChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
         setFilter(event.target.value);
     };
@@ -36,6 +57,11 @@ export const Board: React.FC<BoardProps> = ({columns, onUpdateTasks, filter, sor
                     <option value="name">Name</option>
                     <option value="due_date">Due Date</option>
                 </Form.Select>
+                <Form.Control
+                    type="text"
+                    placeholder="Search..."
+                    onChange={handleSearchChange}
+                />
             </div>
             <div className="columns-container">
                 {columns.map((column: IColumn) => (

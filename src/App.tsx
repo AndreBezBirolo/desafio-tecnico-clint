@@ -30,6 +30,7 @@ function App() {
     (false);
     const [filter, setFilter] = useState<string | null>(null);
     const [sort, setSort] = useState<string | null>(null);
+    const [search, setSearch] = useState<string | null>(null);
     const handleAddTaskClick = () => {
         setShowForm(true);
     };
@@ -45,6 +46,7 @@ function App() {
             const response = await axios.get<ITask[]>(`${process.env.REACT_APP_BACKEND_URL}/tasks`, {
                 params: {
                     filter,
+                    search,
                     sort,
                 },
             });
@@ -67,6 +69,7 @@ function App() {
         await fetchTasks();
         setFilter(null);
         setSort(null);
+        setSearch(null);
         setShowForm(false);
     };
 
@@ -77,7 +80,7 @@ function App() {
     useEffect(() => {
         /* TODO: Verificar porque está sendo chamado duas vezes */
         fetchTasks();
-    }, [filter, sort]);
+    }, [filter, sort, search]);
 
     useEffect(() => {
         organizeTasksInColumns();
@@ -94,7 +97,9 @@ function App() {
                 ) : (
                     <>
                         <Button className="add-task-button" onClick={handleAddTaskClick}>Add new task</Button>
-                        <Board onUpdateTasks={fetchTasks} filter={filter} sort={sort} setFilter={setFilter}
+                        <Board onUpdateTasks={fetchTasks} setSearch={setSearch} filter={filter} sort={sort}
+                               setFilter={setFilter}
+                               search={search}
                                setSort={setSort} columns={columns}/>
                     </>
                 )}
