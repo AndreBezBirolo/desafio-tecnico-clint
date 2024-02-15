@@ -65,6 +65,8 @@ function App() {
     const handleFormSubmit = async (taskData: ITaskBase) => {
         await postTask(taskData);
         await fetchTasks();
+        setFilter(null);
+        setSort(null);
         setShowForm(false);
     };
 
