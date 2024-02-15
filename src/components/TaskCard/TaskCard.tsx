@@ -2,9 +2,9 @@ import React, { useState } from "react";
 import { ITask } from "../../interfaces/interfaces";
 import './TaskCard.css'
 import { Button, CloseButton, Modal } from "react-bootstrap";
-import axios from "axios";
 import { Draggable } from "react-beautiful-dnd";
 import ErrorToast from "../Toasts/ErrorToast";
+import TaskService from "../../services/TaskService";
 
 export interface TaskCardProps {
     task: ITask;
@@ -31,10 +31,9 @@ export const TaskCard: React.FC<TaskCardProps> = ({task, index, onDelete}) => {
 
     const deleteTask = async (): Promise<void> => {
         try {
-            await axios.delete(`${process.env.REACT_APP_BACKEND_URL}/tasks/${task.id}`);
-            onDelete();
+            await TaskService.deleteTask(task.id, onDelete);
         } catch (error) {
-            handleShowError('An error occurred while fetching data from the server.');
+            handleShowError(errorMessage as string);
         }
     }
 

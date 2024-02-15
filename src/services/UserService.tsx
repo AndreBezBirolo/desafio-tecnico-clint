@@ -10,9 +10,8 @@ const UserService = {
             const token = response.data.token;
             localStorage.setItem('jwtToken', token);
             return token;
-        } catch (error) {
-            console.error('Erro ao fazer login:', error);
-            throw error;
+        } catch (error: any) {
+            throw error.response.data.error;
         }
     },
 
@@ -25,9 +24,8 @@ const UserService = {
             const token = response.data.token;
             localStorage.setItem('jwtToken', token);
             return token;
-        } catch (error) {
-            console.error('Erro ao se registrar:', error);
-            throw error;
+        } catch (error: any) {
+            throw error.response.data.error;
         }
     },
     logout: () => {

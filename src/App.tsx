@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react';
 import './App.css';
-import axios from "axios";
 import { IColumn, ITask, ITaskBase } from "./interfaces/interfaces";
 import { Board } from './components/Board/Board';
 import { Button } from "react-bootstrap";
@@ -10,6 +9,7 @@ import ErrorToast from "./components/Toasts/ErrorToast";
 import LoginForm from "./components/LoginForm/LoginForm";
 import { setupJWT } from './Middleware/AuthMiddleware';
 import UserService from "./services/UserService";
+import TaskService from "./services/TaskService";
 
 function App() {
     const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -41,35 +41,26 @@ function App() {
 
     const fetchTasks = async (): Promise<void> => {
         try {
-            const response = await axios.get<ITask[]>(`${process.env.REACT_APP_BACKEND_URL}/tasks`, {
-                params: {
-                    filter,
-                    search,
-                    sort,
-                },
-            });
-            setTasks(response.data);
-        } catch (e) {
-            handleShowError('An error occurred while fetching data from the server.');
+            const tasks = await TaskService.fetchTasks(filter, search, sort);
+            setTasks(tasks);
+        } catch (errorMessage) {
+            handleShowError(errorMessage as string);
         }
-
     }
 
     const postTask = async (taskData: ITaskBase): Promise<void> => {
         try {
-            await axios.post(`${process.env.REACT_APP_BACKEND_URL}/tasks`, taskData);
-        } catch (e) {
-            handleShowError('An error occurred while sending data to the server.');
+            await TaskService.postTask(taskData);
+        } catch (errorMessage) {
+            handleShowError(errorMessage as string);
         }
     }
 
     const patchTask = async (taskId: number, updatedStatus: string): Promise<void> => {
         try {
-            await axios.patch(`${process.env.REACT_APP_BACKEND_URL}/tasks/${taskId}`, {
-                status: updatedStatus
-            });
-        } catch (e) {
-            handleShowError('An error occurred while sending data to the server.');
+            await TaskService.patchTask(taskId, updatedStatus);
+        } catch (errorMessage) {
+            handleShowError(errorMessage as string);
         }
     }
 

@@ -30,8 +30,8 @@ const LoginForm: React.FC<LoginFormProps> = ({onLogin}) => {
                 .then(() => {
                     onLogin();
                 })
-        } catch (error) {
-            handleShowError('An error occurred while sending data to the server.');
+        } catch (errorMessage: any) {
+            handleShowError(errorMessage as string);
         }
     }
 
@@ -41,8 +41,8 @@ const LoginForm: React.FC<LoginFormProps> = ({onLogin}) => {
                 .then(async () => {
                     onLogin();
                 })
-        } catch (error) {
-            handleShowError('An error occurred while sending data to the server.');
+        } catch (errorMessage: any) {
+            handleShowError(errorMessage as string);
         }
     }
     const handleSubmit = async (e: React.FormEvent) => {

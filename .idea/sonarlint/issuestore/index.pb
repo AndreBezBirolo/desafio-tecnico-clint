@@ -77,3 +77,5 @@ Q
 !src/Middleware/AuthMiddleware.tsx,3\f\3fc915cb357489f33bf67164aba95b57f3acef82
 V
 &src/components/LoginForm/LoginForm.css,0\4\044a5fbb0b3111cb2937517eb38ac40facd30832
+L
+src/services/TaskService.tsx,b\7\b7c3c8ffb356b03d753ef361a2fb42da01c21c3f
