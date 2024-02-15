@@ -1,10 +1,10 @@
-import { IColumn, IDraggable } from "../../interfaces/interfaces";
+import { IColumn } from "../../interfaces/interfaces";
 import React from "react";
 import { Column } from "../Column/Column";
 import './Board.css'
 import { Form } from "react-bootstrap";
 import { debounce } from "lodash";
-import { DragDropContext, Droppable } from "react-beautiful-dnd";
+import { DragDropContext, Droppable, DropResult } from "react-beautiful-dnd";
 
 interface BoardProps {
     columns: IColumn[];
@@ -46,13 +46,13 @@ export const Board: React.FC<BoardProps> = ({
         setSort(event.target.value);
     };
 
-    const onDragEnd = (result: any) => {
-        const resultObject: IDraggable = result;
-        if (!result.destination) {
+    const onDragEnd = (result: DropResult) => {
+        const {destination, draggableId} = result;
+        if (!destination) {
             return;
         }
-        const taskId = resultObject.draggableId;
-        const updatedStatus = resultObject.destination.droppableId;
+        const taskId = Number(draggableId);
+        const updatedStatus = destination.droppableId;
         onTaskMove(taskId, updatedStatus);
     };
 

@@ -11,7 +11,7 @@ export interface ColumnProps {
 }
 
 export const Column: React.FC<ColumnProps> = ({column, index, onUpdateTasks}) => {
-    const handleDeleteTask = (taskId: number) => {
+    const handleDeleteTask = () => {
         onUpdateTasks();
     };
 
@@ -23,7 +23,7 @@ export const Column: React.FC<ColumnProps> = ({column, index, onUpdateTasks}) =>
                     <div ref={provided.innerRef} {...provided.droppableProps} className="tasks-container">
                         {column.tasks.map((task, index) => (
                             <TaskCard key={task.id} task={task} index={index}
-                                      onDelete={() => handleDeleteTask(task.id)}/>
+                                      onDelete={() => handleDeleteTask()}/>
                         ))}
                         {provided.placeholder}
                     </div>

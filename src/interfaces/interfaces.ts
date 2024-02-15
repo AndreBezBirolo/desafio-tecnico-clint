@@ -13,13 +13,3 @@ export interface IColumn {
     title: string;
     tasks: ITask[];
 }
-
-export interface IDraggable {
-    draggableId: number;
-    destination: {
-        droppableId: string;
-    },
-    source: {
-        droppableId: string;
-    }
-}
