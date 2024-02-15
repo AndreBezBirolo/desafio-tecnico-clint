@@ -1,5 +1,6 @@
 import React from "react";
-import { ITask } from "../interfaces/interfaces";
+import { ITask } from "../../interfaces/interfaces";
+import './TaskCard.css'
 
 export enum TaskStatus {
     ToDo = 'To do',
@@ -16,9 +17,8 @@ export const TaskCard: React.FC<TaskCardProps> = ({task}) => {
 
     return (
         <div className="task-card">
-            <p>{task.name}</p>
-            <p>{task.status}</p>
-            <p>{formattedDate.toLocaleDateString()}</p>
+            <h3>{task.name}</h3>
+            <p>Due date: {formattedDate.toLocaleDateString()}</p>
         </div>
     );
 };

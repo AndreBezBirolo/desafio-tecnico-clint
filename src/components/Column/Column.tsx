@@ -1,6 +1,7 @@
-import { IColumn } from "../interfaces/interfaces";
+import { IColumn } from "../../interfaces/interfaces";
 import React from "react";
-import { TaskCard } from "./TaskCard";
+import { TaskCard } from "../TaskCard/TaskCard";
+import './Column.css'
 
 export interface ColumnProps {
     column: IColumn

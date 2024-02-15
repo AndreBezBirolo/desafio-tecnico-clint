@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import './App.css';
 import axios from "axios";
 import { IColumn, ITask } from "./interfaces/interfaces";
-import { Board } from './components/Board';
+import { Board } from './components/Board/Board';
 
 function App() {
     const [columns, setColumns] = useState<IColumn[]>([
@@ -34,7 +34,6 @@ function App() {
     }, [tasks]);
 
     const organizeTasksInColumns = () => {
-        console.log('--- organize tasks', columns, tasks)
         const newColumns = columns.map((column) => ({
             ...column,
             tasks: tasks.filter((task) => task.status.replace(/\s/g, '').toLowerCase() === column.key),
@@ -52,7 +51,9 @@ function App() {
 
     return (
         <div className="App">
-            <header>Online Kanban Board</header>
+            <header>
+                <h1>Online Kanban Board</h1>
+            </header>
             <main>
                 <Board columns={columns}></Board>
             </main>

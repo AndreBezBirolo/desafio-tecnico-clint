@@ -35,3 +35,15 @@ I
 src/components/Column.tsx,e\d\ed484f2cdf1a708653cc108fd8e00f38201ccc0a
 K
 src/components/TaskCard.tsx,b\b\bb68dc227f5078b9fd4d6cbef0339b2013de7e6f
+H
+src/components/Board.css,4\8\48a66ecb326fb3cb35c5b2d7d32c05b6c764e7ec
+I
+src/components/Column.css,0\3\038430c60ea5947fa73665c8b2a3b6f65c75a18f
+K
+src/components/TaskCard.css,e\a\ea39f7b39579d477e1a6ccb522c63d8cb9aadb8e
+N
+src/components/Board/Board.tsx,c\f\cf3dbabb874363e8007357d45c9e66b51761ad33
+P
+ src/components/Column/Column.tsx,1\9\19f2abba6607596f39985b7a6e3a056fba725209
+T
+$src/components/TaskCard/TaskCard.tsx,1\f\1fdb4929651870a8b8a04552a28f12ca142a7d0a
