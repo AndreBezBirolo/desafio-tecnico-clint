@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useCallback, useState } from 'react';
 import { Button, Form } from "react-bootstrap";
 import UserService from "../../services/UserService";
 import './LoginForm.css'
@@ -15,14 +15,15 @@ const LoginForm: React.FC<LoginFormProps> = ({onLogin}) => {
     const [showError, setShowError] = useState(false);
     const [errorMessage, setErrorMessage] = useState('');
 
-    const handleShowError = (message: string) => {
+    const handleShowError = useCallback((message: string) => {
         setErrorMessage(message);
         setShowError(true);
-    };
+    }, []);
 
-    const handleCloseError = () => {
+
+    const handleCloseError = useCallback(() => {
         setShowError(false);
-    };
+    }, []);
 
     const loginUser = async (): Promise<void> => {
         try {
@@ -45,11 +46,11 @@ const LoginForm: React.FC<LoginFormProps> = ({onLogin}) => {
             handleShowError(errorMessage as string);
         }
     }
-    const handleSubmit = async (e: React.FormEvent) => {
+
+    const handleSubmit = useCallback(async (e: React.FormEvent) => {
         e.preventDefault();
         await loginUser();
-    };
-
+    }, []);
     return (
         <div className="center">
             <div className="form-container">

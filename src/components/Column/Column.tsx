@@ -1,5 +1,5 @@
 import { IColumn } from "../../interfaces/interfaces";
-import React from "react";
+import React, { useCallback } from "react";
 import { TaskCard } from "../TaskCard/TaskCard";
 import './Column.css'
 import { Droppable } from "react-beautiful-dnd";
@@ -11,9 +11,10 @@ export interface ColumnProps {
 }
 
 export const Column: React.FC<ColumnProps> = ({column, index, onUpdateTasks}) => {
-    const handleDeleteTask = () => {
+
+    const handleDeleteTask = useCallback(() => {
         onUpdateTasks();
-    };
+    }, [onUpdateTasks]);
 
     return (
         <div className="column">

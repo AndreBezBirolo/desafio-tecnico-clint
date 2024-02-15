@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import './App.css';
 import { IColumn, ITask, ITaskBase } from "./interfaces/interfaces";
 import { Board } from './components/Board/Board';
@@ -13,7 +13,16 @@ import TaskService from "./services/TaskService";
 
 function App() {
     const [isLoggedIn, setIsLoggedIn] = useState(false);
-    const [columns, setColumns] = useState<IColumn[]>([
+    const [tasks, setTasks] = useState<ITask[]>([]);
+    const [showForm, setShowForm] = useState
+    (false);
+    const [filter, setFilter] = useState<string | null>(null);
+    const [sort, setSort] = useState<string | null>(null);
+    const [search, setSearch] = useState<string | null>(null);
+    const [showError, setShowError] = useState(false);
+    const [errorMessage, setErrorMessage] = useState('');
+
+    const columns: IColumn[] = useMemo(() => [
         {
             key: 'todo',
             title: 'To do',
@@ -29,15 +38,10 @@ function App() {
             title: 'Ready',
             tasks: [],
         },
-    ])
-    const [tasks, setTasks] = useState<ITask[]>([]);
-    const [showForm, setShowForm] = useState
-    (false);
-    const [filter, setFilter] = useState<string | null>(null);
-    const [sort, setSort] = useState<string | null>(null);
-    const [search, setSearch] = useState<string | null>(null);
-    const [showError, setShowError] = useState(false);
-    const [errorMessage, setErrorMessage] = useState('');
+    ].map((column) => ({
+        ...column,
+        tasks: tasks.filter((task) => task.status.replace(/\s/g, '').toLowerCase() === column.key),
+    })), [tasks])
 
     const fetchTasks = async (): Promise<void> => {
         try {
@@ -64,66 +68,57 @@ function App() {
         }
     }
 
-    const handleShowError = (message: string) => {
+    const handleShowError = useCallback((message: string) => {
         setErrorMessage(message);
         setShowError(true);
-    };
+    }, []);
 
-    const handleCloseError = () => {
+    const handleCloseError = useCallback(() => {
         setShowError(false);
-    };
+    }, []);
 
-    const handleFormSubmit = async (taskData: ITaskBase) => {
+    const handleFormSubmit = useCallback(async (taskData: ITaskBase) => {
         await postTask(taskData);
         await fetchTasks();
         setFilter(null);
         setSort(null);
         setSearch(null);
         setShowForm(false);
-    };
+    }, []);
 
-    const handleTaskMove = async (taskId: number, updatedStatus: string) => {
+    const handleTaskMove = useCallback(async (taskId: number, updatedStatus: string) => {
         await patchTask(taskId, updatedStatus);
-    };
+    }, [])
 
-    const handleAddTaskClick = () => {
+
+    const handleAddTaskClick = useCallback(() => {
         setShowForm(true);
-    };
+    }, []);
 
-    const handleLogin = () => {
+    const handleLogin = useCallback(() => {
         setIsLoggedIn(true);
-    };
+    }, [])
 
-    const handleLogout = () => {
+    const handleLogout = useCallback(() => {
         setIsLoggedIn(false);
         UserService.logout();
-    };
+    }, [])
 
     useEffect(() => {
         setupJWT();
-    }, []);
-
-    useEffect(() => {
         const token = UserService.getToken();
         setIsLoggedIn(!!token);
+        fetchTasks();
     }, []);
 
+    /* TODO: Ao invés de usar
+            useEffect(() => {
+                    fetchTasks();
+                }, [filter, sort, search]);
+            Aplicar o fetch em todos os locais que geram as mudanças no board.tsx */
     useEffect(() => {
-        if (isLoggedIn) {
-            fetchTasks();
-        }
-    }, [filter, sort, search, isLoggedIn]);
-
-    useEffect(() => {
-        if (isLoggedIn) {
-            const newColumns = columns.map((column) => ({
-                ...column,
-                tasks: tasks.filter((task) => task.status.replace(/\s/g, '').toLowerCase() === column.key),
-            }));
-            setColumns(newColumns);
-        }
-
-    }, [tasks, isLoggedIn]);
+        fetchTasks();
+    }, [filter, sort, search]);
 
     return (
         <div className="App">

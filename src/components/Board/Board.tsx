@@ -1,5 +1,5 @@
 import { IColumn } from "../../interfaces/interfaces";
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { Column } from "../Column/Column";
 import './Board.css'
 import { Form } from "react-bootstrap";
@@ -40,17 +40,18 @@ export const Board: React.FC<BoardProps> = ({
         setSearch(value);
     }, 300);
 
-    const handleSearchChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const handleSearchChange = useCallback((event: React.ChangeEvent<HTMLInputElement>) => {
         delayedHandleSearchChange(event.target.value);
-    };
+    }, [delayedHandleSearchChange]);
 
-    const handleFilterChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
+    const handleFilterChange = useCallback((event: React.ChangeEvent<HTMLSelectElement>) => {
         setFilter(event.target.value);
-    };
+    }, [setFilter]);
 
-    const handleSortChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
+
+    const handleSortChange = useCallback((event: React.ChangeEvent<HTMLSelectElement>) => {
         setSort(event.target.value);
-    };
+    }, [setSort]);
 
     const onDragEnd = async (result: DropResult) => {
         let actualColumns = [];

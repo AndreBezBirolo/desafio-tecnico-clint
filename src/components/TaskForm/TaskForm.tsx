@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useCallback, useState } from "react";
 import { ITaskBase } from "../../interfaces/interfaces";
 import './TaskForm.css'
 import { Button, Form } from "react-bootstrap";
@@ -15,17 +15,17 @@ export const TaskForm: React.FC<TaskFormProps> = ({onSubmit, onBack}) => {
         status: ''
     });
 
-    const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const handleChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
         const {name, value} = e.target;
         setTaskData({...taskData, [name]: value});
-    };
+    }, [taskData]);
 
-    const handleChangeSelect = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    const handleChangeSelect = useCallback((e: React.ChangeEvent<HTMLSelectElement>) => {
         const {name, value} = e.target;
         setTaskData({...taskData, [name]: value});
-    };
+    }, [taskData]);
 
-    const handleSubmit = (e: React.FormEvent) => {
+    const handleSubmit = useCallback((e: React.FormEvent) => {
         e.preventDefault();
         onSubmit(taskData);
         setTaskData({
@@ -33,16 +33,16 @@ export const TaskForm: React.FC<TaskFormProps> = ({onSubmit, onBack}) => {
             due_date: new Date(),
             status: ''
         });
-    };
+    }, [onSubmit, taskData]);
 
-    const handleBack = () => {
+    const handleBack = useCallback(() => {
         onBack();
         setTaskData({
             name: '',
             due_date: new Date(),
             status: ''
         });
-    };
+    }, [onBack]);
 
     return (
         <div className="center">

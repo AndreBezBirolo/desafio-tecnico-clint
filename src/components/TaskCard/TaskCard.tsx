@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useCallback, useState } from "react";
 import { ITask } from "../../interfaces/interfaces";
 import './TaskCard.css'
 import { Button, CloseButton, Modal } from "react-bootstrap";
@@ -17,16 +17,18 @@ export const TaskCard: React.FC<TaskCardProps> = ({task, index, onDelete}) => {
     const [showError, setShowError] = useState(false);
     const [errorMessage, setErrorMessage] = useState('');
 
-    const handleShowModal = () => setShowModal(true);
-    const handleCloseModal = () => setShowModal(false);
-    const handleShowError = (message: string) => {
+    const handleShowModal = useCallback(() => setShowModal(true), []);
+    const handleCloseModal = useCallback(() => setShowModal(false), []);
+    const handleShowError = useCallback((message: string) => {
         setErrorMessage(message);
         setShowError(true);
-    };
+    }, []);
 
-    const handleCloseError = () => {
+
+    const handleCloseError = useCallback(() => {
         setShowError(false);
-    };
+    }, []);
+
     const formattedDate = new Date(task.due_date);
 
     const deleteTask = async (): Promise<void> => {
@@ -37,10 +39,11 @@ export const TaskCard: React.FC<TaskCardProps> = ({task, index, onDelete}) => {
         }
     }
 
-    const handleDeleteTask = async () => {
+
+    const handleDeleteTask = useCallback(async () => {
         await deleteTask();
         handleCloseModal();
-    };
+    }, []);
 
     return (
         <Draggable draggableId={task.id.toString()} index={index}>
