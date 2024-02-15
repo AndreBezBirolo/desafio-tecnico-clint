@@ -102,9 +102,9 @@ export const Board: React.FC<BoardProps> = ({
                 <div className="actions-container">
                     <Form.Select onChange={handleFilterChange} defaultValue="">
                         <option value="">Filter by...</option>
-                        <option value="ready">Ready</option>
                         <option value="todo">To do</option>
                         <option value="doing">Doing</option>
+                        <option value="ready">Ready</option>
                     </Form.Select>
                     <Form.Select onChange={handleSortChange} defaultValue="">
                         <option value="">Order by...</option>
