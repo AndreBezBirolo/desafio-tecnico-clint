@@ -47,3 +47,7 @@ P
  src/components/Column/Column.tsx,1\9\19f2abba6607596f39985b7a6e3a056fba725209
 T
 $src/components/TaskCard/TaskCard.tsx,1\f\1fdb4929651870a8b8a04552a28f12ca142a7d0a
+T
+$src/components/TaskForm/TaskForm.tsx,7\0\70cb3a42156ab31d1720de2b0019f3dbc6a63c6e
+T
+$src/components/TaskForm/TaskForm.css,8\0\80ca3e9ac0e8a9eb53545096f22b19b5c5ce617f

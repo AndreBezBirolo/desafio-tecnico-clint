@@ -1,8 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import './App.css';
 import axios from "axios";
-import { IColumn, ITask } from "./interfaces/interfaces";
+import { IColumn, ITask, ITaskBase } from "./interfaces/interfaces";
 import { Board } from './components/Board/Board';
+import { Button } from "react-bootstrap";
+import { TaskForm } from "./components/TaskForm/TaskForm";
+import 'bootstrap/dist/css/bootstrap.min.css';
 
 function App() {
     const [columns, setColumns] = useState<IColumn[]>([
@@ -23,16 +26,10 @@ function App() {
         },
     ])
     const [tasks, setTasks] = useState<ITask[]>([]);
-
-    useEffect(() => {
-        /* TODO: Verificar porque está sendo chamado duas vezes */
-        fetchTasks();
-    }, []);
-
-    useEffect(() => {
-        organizeTasksInColumns();
-    }, [tasks]);
-
+    const [showForm, setShowForm] = useState(false);
+    const handleAddTaskClick = () => {
+        setShowForm(true);
+    };
     const organizeTasksInColumns = () => {
         const newColumns = columns.map((column) => ({
             ...column,
@@ -49,13 +46,38 @@ function App() {
         }
     }
 
+    const handleFormSubmit = (taskData: ITaskBase) => {
+        console.log('--- Teste de form:', taskData)
+        setShowForm(false);
+    };
+
+    const handleFormCancel = () => {
+        setShowForm(false);
+    };
+
+    useEffect(() => {
+        /* TODO: Verificar porque está sendo chamado duas vezes */
+        fetchTasks();
+    }, []);
+
+    useEffect(() => {
+        organizeTasksInColumns();
+    }, [tasks]);
+
     return (
         <div className="App">
             <header>
                 <h1>Online Kanban Board</h1>
             </header>
             <main>
-                <Board columns={columns}></Board>
+                {showForm ? (
+                    <TaskForm onBack={handleFormCancel} onSubmit={handleFormSubmit}/>
+                ) : (
+                    <>
+                        <Button className="add-task-button" onClick={handleAddTaskClick}>Adicionar nova tarefa</Button>
+                        <Board columns={columns}/>
+                    </>
+                )}
             </main>
         </div>
     );
