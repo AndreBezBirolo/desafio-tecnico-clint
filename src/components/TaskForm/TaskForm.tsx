@@ -2,13 +2,14 @@ import React, { useCallback, useState } from "react";
 import { ITaskBase } from "../../interfaces/interfaces";
 import './TaskForm.css'
 import { Button, Form } from "react-bootstrap";
+import { useNavigate } from "react-router-dom";
 
 interface TaskFormProps {
     onSubmit: (taskData: ITaskBase) => void;
-    onBack: () => void;
 }
 
-export const TaskForm: React.FC<TaskFormProps> = ({onSubmit, onBack}) => {
+export const TaskForm: React.FC<TaskFormProps> = ({onSubmit}) => {
+    const navigate = useNavigate();
     const [taskData, setTaskData] = useState({
         name: '',
         due_date: new Date(),
@@ -28,21 +29,7 @@ export const TaskForm: React.FC<TaskFormProps> = ({onSubmit, onBack}) => {
     const handleSubmit = useCallback((e: React.FormEvent) => {
         e.preventDefault();
         onSubmit(taskData);
-        setTaskData({
-            name: '',
-            due_date: new Date(),
-            status: ''
-        });
     }, [onSubmit, taskData]);
-
-    const handleBack = useCallback(() => {
-        onBack();
-        setTaskData({
-            name: '',
-            due_date: new Date(),
-            status: ''
-        });
-    }, [onBack]);
 
     return (
         <div className="center">
@@ -85,7 +72,7 @@ export const TaskForm: React.FC<TaskFormProps> = ({onSubmit, onBack}) => {
                     <Button variant="primary" type="submit">
                         Send
                     </Button>
-                    <Button variant="secondary" onClick={handleBack}>
+                    <Button variant="secondary" onClick={() => navigate('/')}>
                         Back
                     </Button>
                 </Form>

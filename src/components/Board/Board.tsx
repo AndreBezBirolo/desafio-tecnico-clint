@@ -27,7 +27,7 @@ export const Board: React.FC<BoardProps> = ({
                                                 setFilter,
                                                 setSort,
                                                 setSearch,
-                                                onTaskMove
+                                                onTaskMove,
                                             }) => {
     const [updatedColumns, setUpdatedColumns] = useState<IColumn[]>(columns);
     const [isFirstChange, setIsFirstChange] = useState<boolean>(true);

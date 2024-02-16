@@ -1,8 +1,8 @@
-import React, { useCallback, useState } from 'react';
+import React, { useState } from 'react';
 import { Button, Form } from "react-bootstrap";
 import UserService from "../../services/UserService";
 import './LoginForm.css'
-import ErrorToast from "../Toasts/ErrorToast";
+import { toast } from 'react-toastify';
 
 
 interface LoginFormProps {
@@ -12,18 +12,6 @@ interface LoginFormProps {
 const LoginForm: React.FC<LoginFormProps> = ({onLogin}) => {
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
-    const [showError, setShowError] = useState(false);
-    const [errorMessage, setErrorMessage] = useState('');
-
-    const handleShowError = useCallback((message: string) => {
-        setErrorMessage(message);
-        setShowError(true);
-    }, []);
-
-
-    const handleCloseError = useCallback(() => {
-        setShowError(false);
-    }, []);
 
     const loginUser = async (): Promise<void> => {
         try {
@@ -32,7 +20,7 @@ const LoginForm: React.FC<LoginFormProps> = ({onLogin}) => {
                     onLogin();
                 })
         } catch (errorMessage: any) {
-            handleShowError(errorMessage as string);
+            toast.error(errorMessage as string);
         }
     }
 
@@ -43,18 +31,17 @@ const LoginForm: React.FC<LoginFormProps> = ({onLogin}) => {
                     onLogin();
                 })
         } catch (errorMessage: any) {
-            handleShowError(errorMessage as string);
+            toast.error(errorMessage as string);
         }
     }
-
-    const handleSubmit = useCallback(async (e: React.FormEvent) => {
+    const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
         await loginUser();
-    }, []);
+    };
+
     return (
         <div className="center">
             <div className="form-container">
-                <ErrorToast show={showError} onClose={handleCloseError} message={errorMessage}/>
                 <Form onSubmit={handleSubmit}>
                     <Form.Group controlId="formBasicUsername">
                         <Form.Control type="text" placeholder="Username" value={username}

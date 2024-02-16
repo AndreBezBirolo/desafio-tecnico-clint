@@ -3,8 +3,9 @@ import { ITask } from "../../interfaces/interfaces";
 import './TaskCard.css'
 import { Button, CloseButton, Modal } from "react-bootstrap";
 import { Draggable } from "react-beautiful-dnd";
-import ErrorToast from "../Toasts/ErrorToast";
 import TaskService from "../../services/TaskService";
+import { toast } from 'react-toastify';
+
 
 export interface TaskCardProps {
     task: ITask;
@@ -14,35 +15,23 @@ export interface TaskCardProps {
 
 export const TaskCard: React.FC<TaskCardProps> = ({task, index, onDelete}) => {
     const [showModal, setShowModal] = useState(false);
-    const [showError, setShowError] = useState(false);
-    const [errorMessage, setErrorMessage] = useState('');
 
     const handleShowModal = useCallback(() => setShowModal(true), []);
     const handleCloseModal = useCallback(() => setShowModal(false), []);
-    const handleShowError = useCallback((message: string) => {
-        setErrorMessage(message);
-        setShowError(true);
-    }, []);
-
-
-    const handleCloseError = useCallback(() => {
-        setShowError(false);
-    }, []);
 
     const formattedDate = new Date(task.due_date);
 
     const deleteTask = async (): Promise<void> => {
         try {
             await TaskService.deleteTask(task.id, onDelete);
-        } catch (error) {
-            handleShowError(errorMessage as string);
+        } catch (errorMessage) {
+            toast.error(errorMessage as string);
         }
     }
 
 
     const handleDeleteTask = useCallback(async () => {
         await deleteTask();
-        handleCloseModal();
     }, []);
 
     return (
@@ -52,7 +41,6 @@ export const TaskCard: React.FC<TaskCardProps> = ({task, index, onDelete}) => {
                      {...provided.draggableProps}
                      {...provided.dragHandleProps} className="task-card">
                     <h4>{task.name}</h4>
-                    <ErrorToast show={showError} onClose={handleCloseError} message={errorMessage}/>
                     <p>Due date: {formattedDate.toLocaleDateString()}</p>
                     <CloseButton onClick={handleShowModal} className="close-button"></CloseButton>
 
