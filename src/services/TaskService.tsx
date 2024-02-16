@@ -2,7 +2,7 @@ import axios from "axios";
 import { ITask, ITaskBase } from "../interfaces/interfaces";
 
 const TaskService = {
-    fetchTasks: async (filter: string | null, search: string | null, sort: string | null) => {
+    fetch: async (filter: string | null, search: string | null, sort: string | null) => {
         try {
             const response = await axios.get<ITask[]>(`${process.env.REACT_APP_BACKEND_URL}/tasks`, {
                 params: {
@@ -17,7 +17,7 @@ const TaskService = {
         }
     },
 
-    postTask: async (taskData: ITaskBase) => {
+    create: async (taskData: ITaskBase) => {
         try {
             await axios.post(`${process.env.REACT_APP_BACKEND_URL}/tasks`, taskData);
         } catch (error: any) {
@@ -25,7 +25,7 @@ const TaskService = {
         }
     },
 
-    patchTask: async (taskId: number, updatedStatus: string) => {
+    editStatus: async (taskId: number, updatedStatus: string) => {
         try {
             await axios.patch(`${process.env.REACT_APP_BACKEND_URL}/tasks/${taskId}`, {
                 status: updatedStatus
@@ -35,7 +35,7 @@ const TaskService = {
         }
     },
 
-    deleteTask: async (taskId: number, onDelete: () => void) => {
+    delete: async (taskId: number, onDelete: () => void) => {
         try {
             await axios.delete(`${process.env.REACT_APP_BACKEND_URL}/tasks/${taskId}`);
             onDelete();

@@ -43,7 +43,7 @@ function App() {
 
     const fetchTasks = async (): Promise<void> => {
         try {
-            const tasks = await TaskService.fetchTasks(filter, search, sort);
+            const tasks = await TaskService.fetch(filter, search, sort);
             setTasks(tasks);
         } catch (errorMessage) {
             toast.error(errorMessage as string)
@@ -52,7 +52,7 @@ function App() {
 
     const postTask = async (taskData: ITaskBase): Promise<void> => {
         try {
-            await TaskService.postTask(taskData);
+            await TaskService.create(taskData);
         } catch (errorMessage) {
             toast.error(errorMessage as string)
         }
@@ -60,7 +60,7 @@ function App() {
 
     const patchTask = async (taskId: number, updatedStatus: string): Promise<void> => {
         try {
-            await TaskService.patchTask(taskId, updatedStatus);
+            await TaskService.editStatus(taskId, updatedStatus);
         } catch (errorMessage) {
             toast.error(errorMessage as string);
         }

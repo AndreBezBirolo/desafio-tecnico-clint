@@ -23,7 +23,7 @@ export const TaskCard: React.FC<TaskCardProps> = ({task, index, onDelete}) => {
 
     const deleteTask = async (): Promise<void> => {
         try {
-            await TaskService.deleteTask(task.id, onDelete);
+            await TaskService.delete(task.id, onDelete);
         } catch (errorMessage) {
             toast.error(errorMessage as string);
         }
