@@ -4,11 +4,13 @@ import UserService from "./UserService";
 import { jest } from "@jest/globals";
 
 const mockAxios = new MockAdapter(axios);
+jest.useFakeTimers();
 describe("UserService", () => {
     afterEach(() => {
         mockAxios.reset();
         localStorage.clear();
         jest.clearAllMocks();
+        jest.clearAllTimers();
     });
 
     it("login - deve fazer login do usuário corretamente", async () => {

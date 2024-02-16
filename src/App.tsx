@@ -69,10 +69,11 @@ function App() {
     const handleFormSubmit = useCallback(async (taskData: ITaskBase) => {
         await postTask(taskData);
         await fetchTasks();
+        navigate('/');
         setFilter(null);
         setSort(null);
         setSearch(null);
-    }, []);
+    }, [navigate]);
 
     const handleTaskMove = useCallback(async (taskId: number, updatedStatus: string) => {
         await patchTask(taskId, updatedStatus);
